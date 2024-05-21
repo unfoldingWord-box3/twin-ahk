@@ -1,10 +1,9 @@
-﻿#Requires AutoHotkey v2+
+#Requires AutoHotkey v2+
 
 ; Render.ahk is an AHK script that manages 2 or more windows applications.
 ; It is currently sensitive to location of render installation
 
-; Routing
-                    ; support 3 main hotkeys Win-A, Win-K, and Win-S
+; Routing table     ; support 3 main hotkeys Win-A, Win-K, and Win-S
 #n::runNotepad()    ; open notepad as a test
 #+n::raiseNotepad() ; raise notepad to top of stack
 
@@ -18,8 +17,10 @@
 #k::closeAll()      ; kill bible well and render
 #s::runSwitch()     ;
 
+; Legend #=Win, +=Shift, ^=Ctrl, !=Alt
+
 SetTitleMatchMode 3 ; 1-begins with, 2-contains, 3-exact match
-global raiseWhich :=0
+global raiseWhich := 0
 global gutter := A_ScreenWidth / 4
 
 makeGui()
@@ -31,13 +32,29 @@ return
 ;  installed bible well
 ;+ make .25 bible well
 ;  github repo
-
+;
+; something like the following might support arbitrary apps to me managed
+; on say a 4x4 grid 
+;   1.1  1.2  1.3  1.4
+;   2.1  2.2  2.3  2.4
+;   3.1  3.2  3.3  3.4
+;   4.1  4.2  4.3  4.4
+;
 ; workspaceAhk.ini
 ;   [render]
-;     path=
+;     path=C:\Users\bruce\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Hosanna\Render.appref-ms
+;     window=Render
+;     size=1.4-4.4
 ;   [notepad]
-;     path=
-
+;     path=notepad.exe
+;     window=Untitled - Notepad
+;     size=1.2-4.4
+;   [well]
+;     path=chrome.exe --kiosk https://app.well.bible --new-window
+;     window=Bible Well - Google Chrome
+;     size=1.2-4.4
+;
+;Legend path=How to start, window=how to raise, size=coordinates for shape
 
 makeGui() { ; TBD add a button to top right corner to close all and switch
   myGui := Gui()
